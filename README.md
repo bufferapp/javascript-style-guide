@@ -9,6 +9,8 @@ open source projects.
 
 ## Ideals
 
+> **Have a bias toward clarify** - from [The Buffer Values](http://www.slideshare.net/Bufferapp/buffer-culture-04)
+
   - We should always aim to write code that is clear and readable.
   - Use whitespace and add comments liberally :)
 
