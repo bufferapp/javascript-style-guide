@@ -1,0 +1,43 @@
+{
+  /**
+   * More info: http://www.jshint.com
+   */
+
+  // Define normal browser globals like window and document
+  "browser": true,
+
+  // Allows debug code using console.log etc.
+  "devel": true,
+
+  // Make curly braces optional
+  "curly": false,
+
+  // Allows '== null'
+  "eqnull": true,
+
+  // Allows == or != when not comparing to 0 or ''
+  "eqeqeq": false,
+
+  // Warn if using undefined variables
+  "undef": true,
+
+  // Per-project globals
+  "globals": {},
+
+  // Disabled warnings:
+
+  // Ignore missing semi-colons
+  "-W033": true,
+
+  // Ignore use dot-notation warning
+  "-W069": true,
+
+  // Ignore Mixed spaces and tabs
+  "-W099": true,
+
+  // Ignore returning assignments as statements
+  "-W093": true,
+
+  // Ignore expressions instead of assignments, i.e. using ? w/out assignment
+  "-W030": true
+}
