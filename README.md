@@ -12,7 +12,8 @@ open source projects.
 > **Have a bias toward clarity** - from [The Buffer Values](http://www.slideshare.net/Bufferapp/buffer-culture-04)
 
   - We should always aim to write code that is clear and readable.
-  - Use whitespace and add comments liberally :)
+  - Use whitespace. Add comments liberally where needed, but strive to write code that's clear and self documenting
+  - Always try to write code that clearly demonstrates and communicates it's intent.
 
 ## Table of Contents
 
