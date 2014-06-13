@@ -20,24 +20,24 @@ open source projects.
   1. [Naming Conventions](#naming-conventions)
   2. [Strings](#strings)
   3. [Blocks](#blocks)
-  4. [jQuery](#jquery)
+  4. [Whitespace](#whitespace)
+  5. [jQuery](#jquery)
+  6. [Scope & this](#scope--this)
 
-*Future sections may include: Whitespace, Commas+Semicolons, Comments, 
+*Future sections may include: Commas+Semicolons, Comments, 
 Conditional Expressions, Variables, Properties*
 
 ## Naming Conventions
 
-**TODO** *Currently the codebase is split between camelCase and under_score. 
-We should push towards a unified style.*
-
-  - Be descriptive in the variables purpose.
+  - Use camelCase variables and function names. use CAPS_UNDERSCORE for constants.
 
     ```javascript
-    var isFacebook = profile.get('service') === 'facebook';
-    // over...
-    var facebook = profile.get('service') === 'facebook';
-
-    var 
+    var updateText = 'Point Break is the best movie ever.';
+    
+    function setUpdateText(arg) { //...
+    
+    // Constants
+    var MAX_TWEET_LENGTH = 140;
     ```
 
   - Use PascalCase or CapFirst when creating a constructor or extending a 
@@ -51,6 +51,20 @@ We should push towards a unified style.*
     var ProfileView = Backbone.View.extend({
       events: {}
     });
+    ```
+
+  - Use a leading _ to denote private methods
+
+    ```javascript
+    MyClass.prototype._privateMethod = function(){ //...
+    ```
+
+  - Be descriptive in the variables purpose.
+
+    ```javascript
+    var isFacebook = profile.get('service') === 'facebook';
+    // over...
+    var facebook = profile.get('service') === 'facebook';
     ```
 
 ## Strings
@@ -98,6 +112,30 @@ We should push towards a unified style.*
 
     ```
 
+## Whitespace
+
+  - *Currently all of the JavaScript uses tabs, but we may switch to spaces - Discussion pending*
+
+  - Use whitespace with operators
+
+    ```javascript
+    var count = x + 2;
+    // instead of 
+    var count=x+2;
+    ```
+
+  - Use indentation for longer method chaining
+
+    ```javascript
+    $update
+      .text(newText)
+      .removeClass('editing')
+      .addClass('saved');
+
+    // Instead of
+    $update.text(newText).removeClass('editing').addClass('saved');
+    ```
+
 ## jQuery
 
   - Use `.js-` prefixed class selectors. This prevents confusion between 
@@ -129,4 +167,54 @@ We should push towards a unified style.*
     // Instead of
     $('.js-sidebar').addClass('hidden');
     $('.js-sidebar').data('id', '1234');
+    ```
+
+  - Use Promises with $.ajax. jQuery's docs use them as the new default. Use `.then` or `.always` over `.done` and `.fail`
+
+    ```javascript
+    $.ajax({ url: '/updates.json' })
+      .then(function(data){
+        renderUpdates(data.updates);
+      }, function(){
+        alert('Request failed');
+      });
+
+    // Promises also work nicely for wrapping a more complex $.ajax request
+    function saveUpdateText(updateId, text) {
+      return $.ajax({
+        type: 'post'.
+        url: '/updates/' + updateId + '.json',
+        data: {
+          body: text
+        }
+      });
+    }
+
+    // The response
+    function showSuccessNotification(data) {
+      new Notification(data.message);
+    }
+
+    // Usage is very clean and easy to read
+    saveUpdateText(123, 'My new update text')
+      .then(showSuccessNotification);
+
+    ```
+
+## Scope & this
+
+  - Use `.bind(this)` to pass scope to functions if possible. Use `var self = this;` if that approach works better for your use case
+
+    ```javascript
+    someMethod: function(data) {
+      this.saveMyUpdate(data)
+        .then(function(data){
+          this.collection.add(data);
+          this.showSavedNotification();
+        }.bind(this));
+    }
+
+    var myUpdates = updates.filter(function(update){
+      return update.type === this.getCurrentType();
+    }.bind(this));    
     ```
