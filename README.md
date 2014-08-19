@@ -24,7 +24,7 @@ open source projects.
   5. [jQuery](#jquery)
   6. [Scope & this](#scope--this)
 
-*Future sections may include: Commas+Semicolons, Comments, 
+*Future sections may include: Commas+Semicolons, Comments,
 Conditional Expressions, Variables, Properties*
 
 ## Naming Conventions
@@ -33,14 +33,14 @@ Conditional Expressions, Variables, Properties*
 
     ```javascript
     var updateText = 'Point Break is the best movie ever.';
-    
+
     function setUpdateText(arg) { //...
-    
+
     // Constants
     var MAX_TWEET_LENGTH = 140;
     ```
 
-  - Use PascalCase or CapFirst when creating a constructor or extending a 
+  - Use PascalCase or CapFirst when creating a constructor or extending a
     Backbone class. Avoid using a capital first letter unless it's one of these.
 
     ```javascript
@@ -75,9 +75,9 @@ Conditional Expressions, Variables, Properties*
     var update = 'Some text';
     ```
 
-  - Strings longer than 80 characters should be written across multiple lines 
+  - Strings longer than 80 characters should be written across multiple lines
     using string concatenation. Use `+` for concatenation, avoid escaping EOLs
-    with `\`. 
+    with `\`.
 
     ```javascript
     var update = 'Grounds, half and half, affogato sit medium, decaffeinated ' +
@@ -96,7 +96,7 @@ Conditional Expressions, Variables, Properties*
 
 ## Blocks
 
-  - Use curlys `{}` for multi-line blocks, add spacing around statements to 
+  - Use curlys `{}` for multi-line blocks, add spacing around statements to
     encourage readability.
 
     ```javascript
@@ -106,7 +106,7 @@ Conditional Expressions, Variables, Properties*
       $('.js-warning').show();
     }
 
-    // It's ok to drop the braces if it's a short one-liner, try to keep it 
+    // It's ok to drop the braces if it's a short one-liner, try to keep it
     // under ~80 characters long so it's readable
     if ( update.get('text') > 140 ) this.showLengthWarning();
 
@@ -114,13 +114,28 @@ Conditional Expressions, Variables, Properties*
 
 ## Whitespace
 
-  - *Currently all of the JavaScript uses tabs, but we may switch to spaces - Discussion pending*
+  - Use soft tabs set to **2** spaces.
+
+    ```javascript
+    function isAwesome() {
+    ∙∙return this.plan === 'awesome';
+    }
+    this.getDataForModel(123)
+    ∙∙.then(this.renderTemplate);
+
+    // instead of
+    function isBusiness() {
+    ∙∙∙∙return ['small', 'business', 'agency'].indexOf(this.plan) > -1;
+    }
+    this.getDataForModel(456)
+    .then(this.renderTemplate);
+    ```
 
   - Use whitespace with operators
 
     ```javascript
     var count = x + 2;
-    // instead of 
+    // instead of
     var count=x+2;
     ```
 
@@ -138,7 +153,7 @@ Conditional Expressions, Variables, Properties*
 
 ## jQuery
 
-  - Use `.js-` prefixed class selectors. This prevents confusion between 
+  - Use `.js-` prefixed class selectors. This prevents confusion between
     classes needed for design and ones used to reference the DOM from js.
 
     ```html
@@ -203,7 +218,8 @@ Conditional Expressions, Variables, Properties*
 
 ## Scope & this
 
-  - Use `.bind(this)` to pass scope to functions if possible. Use `var self = this;` if that approach works better for your use case
+  - Use `.bind(this)` to pass scope to functions if possible.
+    Use `var _this = this;` if it makes your code simpler and more readable.
 
     ```javascript
     someMethod: function(data) {
@@ -216,5 +232,22 @@ Conditional Expressions, Variables, Properties*
 
     var myUpdates = updates.filter(function(update){
       return update.type === this.getCurrentType();
-    }.bind(this));    
+    }.bind(this));
+
+    // Using _this - Maybe this isn't the best example, but you get the idea :)
+    loadModelDataInForm: function(id){
+      var _this = this;
+      $.ajax({ url: '/model/' + id + '/' })
+        .then(function(data){
+          _this.renderTemplate(data);
+          $('.js-save-button').on('click', function(e){
+            $(this).text('Saving...');
+            _this
+              .getDataFromForm()
+              .save();
+          });
+        }, function(err){
+          alert(err);
+        });
+    }
     ```
