@@ -47,6 +47,8 @@ Conditional Expressions, Variables, Properties*
     function Profile(service){
       this.service = service;
     }
+    
+    var myProfile = new Profile('facebook');
 
     var ProfileView = Backbone.View.extend({
       events: {}
@@ -165,7 +167,7 @@ Conditional Expressions, Variables, Properties*
     $content.text('New text');
     ```
 
-  - Prefix jQuery object variables with a `$`.
+  - Prefix jQuery object variables with a `$`. This makes it easier to distingush jQuery variables vs other variables and DOM elements.
 
     ```javascript
     var $sidebar = $('.js-sidebar');
