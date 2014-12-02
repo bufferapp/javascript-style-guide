@@ -6,6 +6,9 @@
   // Define normal browser globals like window and document
   "browser": true,
 
+  // Define node globals like require + module
+  "node": true,
+
   // Allows debug code using console.log etc.
   "devel": true,
 
