@@ -18,11 +18,12 @@ open source projects.
 ## Table of Contents
 
   1. [Naming Conventions](#naming-conventions)
-  2. [Strings](#strings)
-  3. [Blocks](#blocks)
-  4. [Whitespace](#whitespace)
-  5. [jQuery](#jquery)
-  6. [Scope & this](#scope--this)
+  2. [Variables](#variables)
+  3. [Strings](#strings)
+  4. [Blocks](#blocks)
+  5. [Whitespace](#whitespace)
+  6. [jQuery](#jquery)
+  7. [Scope & this](#scope--this)
 
 *Future sections may include: Commas+Semicolons, Comments,
 Conditional Expressions, Variables, Properties*
@@ -68,6 +69,64 @@ Conditional Expressions, Variables, Properties*
     // over...
     var facebook = profile.get('service') === 'facebook';
     ```
+
+## Variables
+
+  - Remember to use `var` to declare your variables and avoid poluting the global namespace.
+  - Use one `var` declaration per line. Avoid re-use of a single `var` declaration. 
+    This helps keep our commits simple when adding removing a variable since we won't have 
+    to edit spacing or commas/semi-colons.
+    
+    ```javascript
+    var open = false;
+    var count = someCollection.length;
+    ```
+    
+  - Declare unassigned variables last. This helps keep organized and shows what will be assigned 
+    throughout a function.
+
+    ```javascript
+    // good :)
+    var input = document.querySelectorAll('.js-my-input');
+    var text = input.value;
+    var isOverLimit;
+    
+    if (profile.get('service') === 'twitter') {
+      isOverLimit = text > 140;
+    }
+    
+    if (isOverLimit) {
+      // ...
+    }
+    
+    // ...not great :(
+    if (profile.get('service') === 'twitter') {
+      var isOverLimit = text > 140;
+    }
+    
+    // variable may be undefined here
+    if (isOverLimit) {
+      // ...
+    }
+    ```
+    
+  - Assign variables at the top of functions. This avoids issues with hoisting and variable declaration
+    
+    ```javascript
+    function myFunc($container) {
+      var someBoolean = false;
+      var isOpen;
+      
+      // ...other logic
+      
+      if (someBoolean === true) {
+        isOpen = $container.hasClass('.open');
+      }
+  
+      // ...some more logic
+    }
+    ```
+  
 
 ## Strings
 
